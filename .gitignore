@@ -1,0 +1,15 @@
+# Local build outputs and machine-specific state
+.appdata/
+.dotnet-home/
+.nuget-packages/
+**/bin/
+**/obj/
+
+# Supplied reference archives and extracted copies
+reference-src/
+reference-portable/
+
+# Superseded local deliverables / task scratch files
+IDCXray-win-release.zip
+IDCXray.lnk
+idcxray-win-codex-prompt.txt
