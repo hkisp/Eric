@@ -12,6 +12,7 @@ public sealed class Store
 
     public List<Node> Nodes { get; set; } = new();
     public List<RouteRule> Rules { get; set; } = new();
+    public List<Subscription> Subscriptions { get; set; } = new();
     public int Socks { get; set; } = 10808;
     public int Http { get; set; } = 10809;
     public bool SystemProxy { get; set; }
@@ -25,6 +26,7 @@ public sealed class Store
     public string PreviousProxyServer { get; set; } = "";
     public bool ProxyWasCaptured { get; set; }
     public bool DefaultNodeInitialized { get; set; }
+    public bool UsNodeInitialized { get; set; }
 
     public void Load()
     {
@@ -43,6 +45,7 @@ public sealed class Store
             var loaded = JsonSerializer.Deserialize<Store>(json) ?? throw new InvalidDataException("Saved settings are empty.");
             Nodes = loaded.Nodes ?? new();
             Rules = loaded.Rules ?? new();
+            Subscriptions = loaded.Subscriptions ?? new();
             Socks = loaded.Socks;
             Http = loaded.Http;
             SystemProxy = loaded.SystemProxy;
@@ -56,12 +59,15 @@ public sealed class Store
             PreviousProxyServer = loaded.PreviousProxyServer ?? "";
             ProxyWasCaptured = loaded.ProxyWasCaptured;
             DefaultNodeInitialized = loaded.DefaultNodeInitialized || Nodes.Count > 0;
+            UsNodeInitialized = loaded.UsNodeInitialized;
         }
         catch
         {
             Nodes.Clear();
             Rules.Clear();
+            Subscriptions.Clear();
             DefaultNodeInitialized = false;
+            UsNodeInitialized = false;
         }
 
         if (SeedDefaultIfNeeded()) Save();
@@ -69,10 +75,21 @@ public sealed class Store
 
     private bool SeedDefaultIfNeeded()
     {
-        if (Nodes.Count != 0 || DefaultNodeInitialized) return false;
-        Nodes.Add(BuiltInDefaults.CreateOracleNode());
-        DefaultNodeInitialized = true;
-        return true;
+        bool changed = false;
+        if (Nodes.Count == 0 && !DefaultNodeInitialized)
+        {
+            Nodes.Add(BuiltInDefaults.CreateOracleNode());
+            DefaultNodeInitialized = true;
+            changed = true;
+        }
+        if (!UsNodeInitialized)
+        {
+            if (!Nodes.Any(BuiltInDefaults.IsUsNode))
+                Nodes.Add(BuiltInDefaults.CreateUsNode());
+            UsNodeInitialized = true;
+            changed = true;
+        }
+        return changed;
     }
 
     public void Save()

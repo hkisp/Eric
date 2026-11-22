@@ -4,12 +4,36 @@
 .nuget-packages/
 **/bin/
 **/obj/
+*.pdb
+*.user
+*.suo
+*.DS_Store
+
+# Secrets, live configs, and user node data — never commit these
+.env
+.env.*
+nodes.json
+nodes.dpapi
+**/*vless*.txt
+**/*share*.txt
+*.conf
+**/user-data/
 
 # Supplied reference archives and extracted copies
 reference-src/
 reference-portable/
 
+# Local publish/test scratch
+publish-ai-only/
+publish-fd/
+publish-mac/
+diag/
+wg-smoke/
+*.bak
+*.bak-*
+
 # Superseded local deliverables / task scratch files
 IDCXray-win-release.zip
 IDCXray.lnk
 idcxray-win-codex-prompt.txt
+test-output.txt

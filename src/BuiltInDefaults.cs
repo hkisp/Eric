@@ -1,22 +1,52 @@
 namespace IDCXray;
 
-/// <summary>First-run Oracle profile supplied by the user.</summary>
+/// <summary>
+/// First-run placeholder profiles. These are documentation/example values only
+/// (TEST-NET-3 addresses and dummy credentials) and will not connect to a real server.
+/// Import or subscribe your own nodes after install.
+/// </summary>
 internal static class BuiltInDefaults
 {
+    public const string UsHost = "203.0.113.20";
+    public const int UsPort = 38501;
+
     public static Node CreateOracleNode() => new()
     {
-        Name = "Oracle",
+        Name = "osaka-amd",
         Protocol = "vless",
-        Host = "129.225.142.235",
-        Port = 38501,
-        Id = "05c3dd29-5884-4764-affd-5f491c4f0cc8",
+        Host = "203.0.113.10",
+        Port = 443,
+        Id = "00000000-0000-4000-8000-000000000001",
         Flow = "xtls-rprx-vision",
-        Network = "raw",
+        Network = "tcp",
         Security = "reality",
         Sni = "www.microsoft.com",
         Fingerprint = "chrome",
-        PublicKey = "ah3HXRcPMIa-lAGejeVbUxF2-ldwnQiMOYyUqKc_NRQ",
-        ShortId = "127acd237767c2da",
+        PublicKey = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        ShortId = "",
         IsBuiltInOracle = true
     };
+
+    public static Node CreateUsNode() => new()
+    {
+        Name = "us",
+        Protocol = "vless",
+        Host = UsHost,
+        Port = UsPort,
+        Id = "00000000-0000-4000-8000-000000000002",
+        Flow = "xtls-rprx-vision",
+        Network = "tcp",
+        Security = "reality",
+        Sni = "swdist.apple.com",
+        Fingerprint = "chrome",
+        PublicKey = "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+        ShortId = "",
+        IsBuiltInOracle = false
+    };
+
+    public static bool IsUsNode(Node n) =>
+        n is not null
+        && string.Equals(n.Protocol, "vless", StringComparison.OrdinalIgnoreCase)
+        && string.Equals(n.Host, UsHost, StringComparison.OrdinalIgnoreCase)
+        && n.Port == UsPort;
 }
