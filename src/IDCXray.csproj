@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>WinExe</OutputType><TargetFramework>net8.0-windows</TargetFramework><UseWPF>true</UseWPF><UseWindowsForms>true</UseWindowsForms><EnableWindowsTargeting>true</EnableWindowsTargeting><Nullable>enable</Nullable><ImplicitUsings>enable</ImplicitUsings><AssemblyName>Eric agent</AssemblyName><Product>Eric agent</Product><Title>Eric agent</Title><RootNamespace>IDCXray</RootNamespace><RuntimeIdentifier>win-x64</RuntimeIdentifier><SelfContained>true</SelfContained>
+    <Version>1.6.0</Version>
+    <AssemblyVersion>1.6.0.0</AssemblyVersion>
+    <FileVersion>1.6.0.0</FileVersion>
+    <InformationalVersion>1.6.0</InformationalVersion>
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(EricAiOnly)' == 'true'"><DefineConstants>$(DefineConstants);ERIC_AI_ONLY</DefineConstants><Product>Eric agent 1.6.0 限定版</Product><Title>Eric agent 1.6.0 限定版</Title><InformationalVersion>1.6.0-ai-only</InformationalVersion></PropertyGroup>
+  <ItemGroup><Content Include="core\**\*" Link="core\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" /></ItemGroup>
+</Project>
